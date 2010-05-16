@@ -40,7 +40,7 @@ import android.view.WindowManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebStorage;
+// import android.webkit.WebStorage; // 1.5 don't have this
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings.LayoutAlgorithm;
@@ -281,7 +281,7 @@ public class DroidGap extends Activity {
 			super(ctx);
 			// TODO Auto-generated constructor stub
 		}
-		
+		/* comment for 1.5
 		public void onExceededDatabaseQuota(String url, String databaseIdentifier, long currentQuota, long estimatedSize,
 		    	     long totalUsedQuota, WebStorage.QuotaUpdater quotaUpdater)
 		{
@@ -301,7 +301,7 @@ public class DroidGap extends Activity {
 		    		quotaUpdater.updateQuota(currentQuota);
 		    	}		    	
 		}		
-		
+		*/
 		// This is a test of console.log, because we don't have this in Android 2.01
 		public void addMessageToConsole(String message, int lineNumber, String sourceID)
 		{
