@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'fileutils'
 
+
 # ./droidgap /Users/brianleroux/Code/android-sdk-mac MyApp com.westcoastlogic example /Users/brianleroux/Desktop/MyApp
 class Build
   attr_reader :android_sdk_path, :name, :pkg, :www, :path
@@ -25,16 +26,24 @@ class Build
   
   # removes local.properties and recreates based on android_sdk_path 
   # then generates framework/phonegap.jar
-  def build_jar
+  def build_jar  
+    win = RUBY_PLATFORM.match /win32/
+    win7 = win and `ver`.match /6.1/
     puts "Building the JAR..."
     %w(local.properties phonegap.js phonegap.jar).each do |f|
       FileUtils.rm File.join(@framework_dir, f) if File.exists? File.join(@framework_dir, f)
     end
     open(File.join(@framework_dir, "local.properties"), 'w') do |f|
-      f.puts "sdk.dir=#{ @android_sdk_path }"
+      line = "sdk.dir=#{ @android_sdk_path }"
+      line = line.gsub(/\\/, '\\\\\\\\') if win7
+      f.puts line
     end 
     Dir.chdir(@framework_dir)
-    `ant jar`
+    if win
+      `cmd.exe /c "ant jar"`
+    else
+      `ant jar`
+    end
     Dir.chdir(@android_dir)
   end
 
